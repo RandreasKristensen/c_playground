@@ -54,6 +54,6 @@ void da_insert(DynamicArray* arr, int index, void* element) {
 	//update size
 }
 
-void da_foreach(DynamicArray* arr, void (fn*)(void* element) {
+void da_foreach(DynamicArray* arr, void (*fn)(void* element)) {
 	//call function on each element
 }
