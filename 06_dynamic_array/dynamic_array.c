@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "dynamic_array.h"
 
 DynamicArray da_constructor(int capacity, int element_size) {
@@ -11,23 +12,26 @@ DynamicArray da_constructor(int capacity, int element_size) {
 }
 
 static void da_resize(DynamicArray* arr) {
-	//use realloc to double capacity
-	//update capacity
+	arr->data = realloc(arr->data, arr->capacity * 2);
+	arr->capacity = (arr->capacity * 2);
 }
 
 void da_free(DynamicArray* arr) {
-	//free mem
+	free(arr->data);
 }
 
 void da_push(DynamicArray* arr, void* element) {
-	//check if reaaloc needed
-	//get ptr to next element
-	//set value at ptr to value at element
-	//update size
+	if (arr->capacity <= arr->size + 1) {
+		da_resize(arr);
+	}
+	void* next_element = da_get(arr, arr->size);
+	memcpy(element, next_element, arr->element_size);
+	arr->size++;
 }
 
 void* da_get(DynamicArray* arr, int index) {
-	//return ptr to element at index from element size and start ptr
+	void* next = (arr->data + ( index * arr->element_size ) + arr->element_size);
+ 	return next;
 }
 
 void da_set(DynamicArray* arr, int index, void* element) {
